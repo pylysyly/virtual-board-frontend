@@ -4,6 +4,15 @@ body {
     color: #F5E8D8;
 }
 
+.custom-btn {
+  background-color: #FF6F61;   
+  color: #F5E8D8;                
+  border: none;
+}
+.custom-btn:hover {
+  background-color: #FF4500;   
+}
+
 .virtual-board {
     display: flex;
     overflow-x: auto;
@@ -11,12 +20,12 @@ body {
 }
 
 .virtual-column {
-    min-width: 300px;
-    max-width: 300px;
+    min-width: 120px;
+    max-width: 120px;
     margin: 0 15px;
-    background-color: #F5E8D8;
-    border-radius: 10px;
-    padding: 10px;
+    background-color: #1C1C1C;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .virtual-column h4 {
@@ -51,10 +60,22 @@ body {
     margin-left: 5px;
 }
 
-.add-task-form {
-    margin-top: 20px;
-}
-
 .dragging {
     opacity: 0.5;
+}
+
+#notes-container {
+  width: 100%;
+  min-height: 200px;
+}
+
+.note-textarea {
+  width: 100%;
+  height: 80px;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
 }
