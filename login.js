@@ -1,21 +1,23 @@
+//prevents dropdown from closing
 document.addEventListener('DOMContentLoaded', function () {
-  // Prevent dropdown from closing when submitting the form inside it
-  document.querySelectorAll('.dropdown-menu form').forEach(function(form) {
-    form.addEventListener('submit', function(e) {
-      e.stopPropagation(); // Prevent Bootstrap from closing the dropdown
+  document.querySelectorAll('.dropdown-menu form').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.stopPropagation();
       // Your validation logic here (optional)
-      e.preventDefault(); // Remove this if you want to actually submit the form
+      e.preventDefault();
     });
   });
 
-  // Select all forms on the page
-  document.querySelectorAll('form').forEach(function(form) {
-    form.addEventListener('submit', function(e) {
-      // Find all email inputs in the form
+  //LÄGG TILL ANTI INJECTION I ALLA TEXTFÄLT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //Lagg till att checka boda inputs so dom inte e tomma!!!!!!!!!!!!!
+
+
+  // email o pass check
+  document.querySelectorAll('form').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
       const emailInputs = form.querySelectorAll('input[type="email"]');
       let valid = true;
-      emailInputs.forEach(function(input) {
-        // Simple email regex
+      emailInputs.forEach(function (input) {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(input.value)) {
           valid = false;
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
           input.classList.remove('is-invalid');
         }
       });
+      //
       const submitBtn = form.querySelector('button[type="submit"]');
       if (!valid) {
         e.preventDefault();
