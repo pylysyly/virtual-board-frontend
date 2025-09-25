@@ -1,4 +1,3 @@
-
 let dragSrcEl = null;
 
 function handleDragStart(e) {
@@ -38,13 +37,17 @@ function addDnDHandlers(elem) {
 
 document.getElementById('add-task-btn').addEventListener('click', function() {
   const note = document.createElement('div');
-  note.className = 'task-card';
-  note.setAttribute('draggable', 'true');
+  note.className = 'task-card draggable-note';
   note.innerHTML = `
+    <div class="note-banner d-flex justify-content-between align-items-center">
+      <input type="text" class="banner-input" value="Note">
+      <button class="btn btn-sm customrmv-btn remove-note">&times;</button>
+    </div>
     <textarea class="note-textarea" placeholder="Write here..."></textarea>
-    <button class="btn btn-sm btn-danger remove-note" style="position:absolute;top:5px;right:5px;">&times;</button>
   `;
-  note.style.position = 'relative';
+  note.style.position = 'absolute';
+  note.style.left = '20px';
+  note.style.top = '20px';
   document.getElementById('notes-container').appendChild(note);
 
   // Remove note on button click
@@ -52,5 +55,37 @@ document.getElementById('add-task-btn').addEventListener('click', function() {
     note.remove();
   };
 
-  addDnDHandlers(note);
+  makeDraggable(note);
 });
+
+function makeDraggable(elem) {
+  let offsetX, offsetY, isDragging = false;
+
+  elem.addEventListener('mousedown', function(e) {
+    if (e.target.classList.contains('remove-note') || e.target.classList.contains('note-textarea')) return;
+    isDragging = true;
+    const container = document.getElementById('notes-container');
+    const rect = container.getBoundingClientRect();
+    offsetX = e.clientX - rect.left - elem.offsetLeft;
+    offsetY = e.clientY - rect.top - elem.offsetTop;
+    elem.style.zIndex = Date.now();
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    const container = document.getElementById('notes-container');
+    const rect = container.getBoundingClientRect();
+    let x = e.clientX - rect.left - offsetX;
+    let y = e.clientY - rect.top - offsetY;
+    x = Math.max(0, Math.min(x, container.offsetWidth - elem.offsetWidth));
+    y = Math.max(0, Math.min(y, container.offsetHeight - elem.offsetHeight));
+    elem.style.left = x + 'px';
+    elem.style.top = y + 'px';
+  });
+
+  document.addEventListener('mouseup', function() {
+    isDragging = false;
+    document.body.style.userSelect = '';
+  });
+}
