@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
           }, 1500);
         }
       }
+      const emailValue = form.querySelector('input[type="email"]').value;
+      const passwordValue = form.querySelector('input[type="password"]').value;
     });
   });
 });
