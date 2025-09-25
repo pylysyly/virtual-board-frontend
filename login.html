@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <h1 class="text-center mt-4 mb-0">Virtual Board</h1>
+    
+    <!-- Login form -->
+    <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+      <div class="login-form-box">
+        <h2 class="text-center">Log In</h2>
+        <form>
+          <div class="form-group mb-2">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" autocomplete="email">
+          </div>
+          <div class="form-group mb-2">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn customlogin-btn w-50 mx-auto d-block mt-5">Log In</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dropdown menu -->
+    <div class="top-right-dropdown">
+      <div class="dropdown">
+        <button class="btn customlogin-btn dropdown-toggle" type="button" id="signupDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sign Up
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-4" aria-labelledby="signupDropdown">
+          <form>
+            <div class="form-group">
+              <label for="signupEmail">Email address</label>
+              <input type="email" class="form-control" id="signupEmail" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" class="form-control" id="signupPassword" placeholder="Password">
+            </div>
+            <button type="submit" class="btn customlogin-btn btn-block mt-2">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="login.js"></script>
+  </body>
+</html>
