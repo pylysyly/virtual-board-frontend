@@ -1,26 +1,3 @@
-//add note
-document.getElementById('add-task-btn').addEventListener('click', function () {
-  const note = document.createElement('div');
-  note.className = 'note-card draggable-note';
-  note.innerHTML = `
-    <div class="note-banner d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center">
-        <input type="text" class="banner-input" value="Note">
-        <div class="color-btns ml-2 d-flex align-items-center">
-          <button class="color-btn color-yellow" data-color="#DAA520" title="Yellow"></button>
-          <button class="color-btn color-red" data-color="#FF6F61" title="Red"></button>
-          <button class="color-btn color-blue" data-color="#3A8DFF" title="Blue"></button>
-          <button class="color-btn color-green" data-color="#3CB371" title="Green"></button>
-          <button class="customrmv-btn remove-note ml-0">&times;</button>
-        </div>
-      </div>
-    </div>
-    <textarea class="note-textarea" placeholder="Write here..."></textarea>
-  `;
-  note.style.position = 'absolute';
-  note.style.left = '20px';
-  note.style.top = '20px';
-  document.getElementById('notes-container').appendChild(note);
 
   // remove note
   note.querySelector('.remove-note').onclick = function () {
@@ -35,7 +12,7 @@ document.getElementById('add-task-btn').addEventListener('click', function () {
       banner.style.backgroundColor = btn.getAttribute('data-color');
     });
   });
-});
+
 
 // Drag and Drop funktion
 
