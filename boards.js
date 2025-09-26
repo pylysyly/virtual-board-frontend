@@ -1,5 +1,7 @@
 apiUrl = 'https://viritual-board-colab.onrender.com/';
 
+let noteOffset = 0;
+
 async function fetchBoards() {
     try {
         const token = localStorage.getItem('authToken');
@@ -123,9 +125,10 @@ function displayNotes(notes) {
             <textarea class="note-textarea" placeholder="Write here...">${note.content || note.text || ''}</textarea>
         `;
 
-        noteElement.style.position = 'absolute';
-        noteElement.style.left = (note.positionX || note.posx || Math.random() * 200 + 20) + 'px';
-        noteElement.style.top = (note.positionY || note.posY || Math.random() * 200 + 20) + 'px';
+        const offset = noteOffset * 30; // 30px offset per note, adjust as you like
+        noteElement.style.left = (note.positionX || note.posx || offset) + 'px';
+        noteElement.style.top = (note.positionY || note.posY || offset) + 'px';
+        noteOffset++;
 
         if (note.color) {
             const banner = noteElement.querySelector('.note-banner');
@@ -279,9 +282,9 @@ function addNoteToDisplay(note) {
         <textarea class="note-textarea" placeholder="Write here...">${note.content || note.text || ''}</textarea>
     `;
 
-    noteElement.style.position = 'absolute';
-    noteElement.style.left = (note.positionX || note.posx || Math.random() * 200 + 20) + 'px';
-    noteElement.style.top = (note.positionY || note.posY || Math.random() * 200 + 20) + 'px';
+    noteElement.style.left = (note.positionX || note.posx || offset) + 'px';
+    noteElement.style.top = (note.positionY || note.posY || offset) + 'px';
+    noteOffset++;
 
     if (note.color) {
         const banner = noteElement.querySelector('.note-banner');
@@ -303,42 +306,23 @@ document.getElementById('add-task-btn').addEventListener('click', async function
         return;
     }
 
+    const offset = noteOffset * 10;
     const newNoteData = {
         title: 'Note',
         content: '',
         color: '#DAA520',
-        positionX: Math.random() * 200 + 20,
-        positionY: Math.random() * 200 + 20,
+        positionX: offset,
+        positionY: offset,
     };
+    noteOffset++;
 
     const newNote = await createNote(selectedBoardId, newNoteData);
     if (newNote) {
         addNoteToDisplay(newNote);
-    } else {
-        alert('Failed to create note');
     }
 });
 
-async function updateNote(boardId, noteId, updatedData) {
-    const token = localStorage.getItem('authToken');
-    try {
-        const response = await fetch(`${apiUrl}boards/${boardId}/cards/${noteId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedData),
-        });
-        if (!response.ok) {
-            throw new Error('Failed to update note');
-        }
-        const updatedNote = await response.json();
-        console.log('Updated note:', updatedNote);
-        return updatedNote;
-    } catch (error) {
-        console.error('Error updating note:', error);
-        return null;
-    }
+window.makeDraggable = function(elem) {
+  
 }
 
