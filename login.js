@@ -89,12 +89,12 @@ loginForm.addEventListener('submit', async (e) => {
   }
 });
 
-async function signupUser(email, password) {
+async function signupUser(email, username, password) {
   try {
-    const response = await fetch(`${apiUrl}/signup`, {
+    const response = await fetch(`${apiUrl}/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, username, password }),
     });
     if (!response.ok) {
       const errorData = await response.json();
@@ -112,9 +112,10 @@ async function signupUser(email, password) {
 
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+  const username = document.getElementById('signupUsername').value;
   const email = document.getElementById('signupEmail').value;
   const password = document.getElementById('signupPassword').value;
-  const result = await signupUser(email, password);
+  const result = await signupUser(email, username, password);
   if (result) {
     alert('Signup successful! You can now log in.');
     signupForm.reset();
