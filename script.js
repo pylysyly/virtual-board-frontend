@@ -1,4 +1,4 @@
-//add note + drag and drop funktion
+//add note
 document.getElementById('add-task-btn').addEventListener('click', function () {
   const note = document.createElement('div');
   note.className = 'note-card draggable-note';
@@ -35,46 +35,9 @@ document.getElementById('add-task-btn').addEventListener('click', function () {
       banner.style.backgroundColor = btn.getAttribute('data-color');
     });
   });
-
-  makeDraggable(note);
 });
 
-let dragSrcEl = null;
-
-function handleDragStart(e) {
-  dragSrcEl = this;
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/html', this.outerHTML);
-  this.classList.add('dragging');
-}
-
-function handleDragOver(e) {
-  if (e.preventDefault) e.preventDefault();
-  return false;
-}
-
-function handleDrop(e) {
-  if (e.stopPropagation) e.stopPropagation();
-  if (dragSrcEl !== this) {
-    this.parentNode.removeChild(dragSrcEl);
-    let dropHTML = e.dataTransfer.getData('text/html');
-    this.insertAdjacentHTML('beforebegin', dropHTML);
-    let dropped = this.previousSibling;
-    addDnDHandlers(dropped);
-  }
-  return false;
-}
-
-function handleDragEnd(e) {
-  this.classList.remove('dragging');
-}
-
-function addDnDHandlers(elem) {
-  elem.addEventListener('dragstart', handleDragStart, false);
-  elem.addEventListener('dragover', handleDragOver, false);
-  elem.addEventListener('drop', handleDrop, false);
-  elem.addEventListener('dragend', handleDragEnd, false);
-}
+// Drag and Drop funktion
 
 function makeDraggable(elem) {
   let offsetX, offsetY, isDragging = false;
