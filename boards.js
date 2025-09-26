@@ -278,7 +278,7 @@ function addNoteToDisplay(note) {
         </div>
         <textarea class="note-textarea" placeholder="Write here...">${note.content || note.text || ''}</textarea>
     `;
-
+    const offset = noteOffset * 10;
     noteElement.style.left = (note.positionX || note.posx || offset) + 'px';
     noteElement.style.top = (note.positionY || note.posY || offset) + 'px';
     noteOffset++;
