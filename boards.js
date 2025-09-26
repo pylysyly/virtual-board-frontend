@@ -103,7 +103,7 @@ function displayNotes(notes) {
         return;
     }
     notesContainer.innerHTML = '';
-    
+
     notes.forEach(note => {
         const noteElement = document.createElement('div');
         noteElement.className = 'note-card draggable-note';
@@ -122,18 +122,18 @@ function displayNotes(notes) {
             </div>
             <textarea class="note-textarea" placeholder="Write here...">${note.content || note.text || ''}</textarea>
         `;
-        
+
         noteElement.style.position = 'absolute';
         noteElement.style.left = (note.positionX || note.posx || Math.random() * 200 + 20) + 'px';
         noteElement.style.top = (note.positionY || note.posY || Math.random() * 200 + 20) + 'px';
-        
+
         if (note.color) {
             const banner = noteElement.querySelector('.note-banner');
             banner.style.backgroundColor = note.color;
         }
-        
+
         notesContainer.appendChild(noteElement);
-        
+
         setupNoteEventListeners(noteElement);
     });
 }
@@ -141,7 +141,7 @@ function displayNotes(notes) {
 function setupNoteEventListeners(noteElement) {
     const noteId = noteElement.getAttribute('data-note-id');
     const boardSelector = document.getElementById('boardSelector');
-    
+
     // Remove note functionality
     const removeBtn = noteElement.querySelector('.remove-note');
     if (removeBtn) {
@@ -150,7 +150,7 @@ function setupNoteEventListeners(noteElement) {
             // TODO: Add delete API call here if needed
         };
     }
-    
+
     // Color change functionality with database update
     const banner = noteElement.querySelector('.note-banner');
     noteElement.querySelectorAll('.color-btn').forEach(function (btn) {
@@ -158,7 +158,7 @@ function setupNoteEventListeners(noteElement) {
             e.stopPropagation();
             const newColor = btn.getAttribute('data-color');
             banner.style.backgroundColor = newColor;
-            
+
             // Update database with new color
             if (noteId && boardSelector.value) {
                 const updatedData = {
@@ -168,7 +168,7 @@ function setupNoteEventListeners(noteElement) {
             }
         });
     });
-    
+
     // Title change functionality with database update
     const titleInput = noteElement.querySelector('.banner-input');
     if (titleInput) {
@@ -181,7 +181,7 @@ function setupNoteEventListeners(noteElement) {
                 await updateNote(boardSelector.value, noteId, updatedData);
             }
         });
-        
+
         // Also save on Enter key
         titleInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
@@ -189,7 +189,7 @@ function setupNoteEventListeners(noteElement) {
             }
         });
     }
-    
+
     // Content change functionality with database update
     const contentTextarea = noteElement.querySelector('.note-textarea');
     if (contentTextarea) {
@@ -203,11 +203,11 @@ function setupNoteEventListeners(noteElement) {
             }
         });
     }
-    
+
     // Make draggable with position update
     if (typeof makeDraggable === 'function') {
         makeDraggable(noteElement);
-        
+
         // Add position update when dragging stops
         let dragEndTimeout;
         noteElement.addEventListener('mouseup', function () {
@@ -218,7 +218,7 @@ function setupNoteEventListeners(noteElement) {
                     const containerRect = document.getElementById('notes-container').getBoundingClientRect();
                     const positionX = rect.left - containerRect.left;
                     const positionY = rect.top - containerRect.top;
-                    
+
                     const updatedData = {
                         positionX: Math.round(positionX),
                         positionY: Math.round(positionY)
@@ -259,7 +259,7 @@ function addNoteToDisplay(note) {
         console.error('Notes container element not found');
         return;
     }
-    
+
     const noteElement = document.createElement('div');
     noteElement.className = 'note-card draggable-note';
     noteElement.setAttribute('data-note-id', note.id || note._id);
@@ -278,26 +278,26 @@ function addNoteToDisplay(note) {
         </div>
         <textarea class="note-textarea" placeholder="Write here...">${note.content || note.text || ''}</textarea>
     `;
-    
+
     noteElement.style.position = 'absolute';
     noteElement.style.left = (note.positionX || note.posx || Math.random() * 200 + 20) + 'px';
     noteElement.style.top = (note.positionY || note.posY || Math.random() * 200 + 20) + 'px';
-    
+
     if (note.color) {
         const banner = noteElement.querySelector('.note-banner');
         banner.style.backgroundColor = note.color;
     }
-    
+
     notesContainer.appendChild(noteElement);
     setupNoteEventListeners(noteElement);
-    
+
     return noteElement;
 }
 
 document.getElementById('add-task-btn').addEventListener('click', async function () {
     const boardSelector = document.getElementById('boardSelector');
     const selectedBoardId = boardSelector.value;
-    
+
     if (!selectedBoardId) {
         alert('Please select a board first');
         return;
@@ -310,7 +310,7 @@ document.getElementById('add-task-btn').addEventListener('click', async function
         positionX: Math.random() * 200 + 20,
         positionY: Math.random() * 200 + 20,
     };
-    
+
     const newNote = await createNote(selectedBoardId, newNoteData);
     if (newNote) {
         addNoteToDisplay(newNote);
