@@ -107,6 +107,7 @@ function displayNotes(notes) {
     notes.forEach(note => {
         const noteElement = document.createElement('div');
         noteElement.className = 'note-card draggable-note';
+        noteElement.setAttribute('data-note-id', note.id || note._id); // Store note ID for operations
         noteElement.innerHTML = `
             <div class="note-banner d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
@@ -145,9 +146,14 @@ function setupNoteEventListeners(noteElement) {
     // Remove note functionality
     const removeBtn = noteElement.querySelector('.remove-note');
     if (removeBtn) {
-        removeBtn.onclick = function () {
-            noteElement.remove();
-            // TODO: Add delete API call here if needed
+        removeBtn.onclick = async function () {
+            // Delete from database first
+            const success = await deleteNote(boardSelector.value, noteId);
+            if (success) {
+                noteElement.remove();
+            } else {
+                alert('Failed to delete note');
+            }
         };
     }
 
@@ -322,7 +328,7 @@ document.getElementById('add-task-btn').addEventListener('click', async function
 async function updateNote(boardId, noteId, updatedData) {
     const token = localStorage.getItem('authToken');
     try {
-        const response = await fetch(`${apiUrl}boards/${boardId}/cards/${noteId}`, {
+        const response = await fetch(`${apiUrl}boards/cards/${noteId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -342,3 +348,24 @@ async function updateNote(boardId, noteId, updatedData) {
     }
 }
 
+async function deleteNote(boardId, noteId) {
+    const token = localStorage.getItem('authToken');
+    try {
+        // Try the simpler endpoint structure first
+        const response = await fetch(`${apiUrl}boards/cards/${noteId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`Failed to delete note - Status: ${response.status}`);
+        }
+        console.log('Deleted note with ID:', noteId);
+        return true;
+    } catch (error) {
+        console.error('Error deleting note:', error);
+        return false;
+    }
+}
