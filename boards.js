@@ -349,6 +349,8 @@ async function updateNote(boardId, noteId, updatedData) {
         console.error('Error updating note:', error);
         return null;
     }
+}
+
 window.makeDraggable = function(elem) {
   
 }
