@@ -29,15 +29,15 @@ body {
 .customrmv-btn {
   background-color: transparent;
   color: #F5E8D8;
+  border-radius: 3px;
   border: none;
   position: absolute;
-  top: 5px;
   right: 5px;
 
 }
 
 .customrmv-btn:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  color: #1C1C1C;
 }
 
 .virtual-board {
