@@ -126,7 +126,7 @@ function displayNotes(notes) {
             <textarea class="note-textarea" placeholder="Write here...">${note.content || note.text || ''}</textarea>
         `;
 
-        const offset = noteOffset * 30; // 30px offset per note, adjust as you like
+        const offset = noteOffset * 30; 
         noteElement.style.left = (note.positionX || note.posx || offset) + 'px';
         noteElement.style.top = (note.positionY || note.posY || offset) + 'px';
         noteOffset++;
@@ -146,11 +146,9 @@ function setupNoteEventListeners(noteElement) {
     const noteId = noteElement.getAttribute('data-note-id');
     const boardSelector = document.getElementById('boardSelector');
 
-    // Remove note functionality
     const removeBtn = noteElement.querySelector('.remove-note');
     if (removeBtn) {
         removeBtn.onclick = async function () {
-            // Delete from database first
             const success = await deleteNote(boardSelector.value, noteId);
             if (success) {
                 noteElement.remove();
@@ -160,7 +158,6 @@ function setupNoteEventListeners(noteElement) {
         };
     }
 
-    // Color change functionality with database update
     const banner = noteElement.querySelector('.note-banner');
     noteElement.querySelectorAll('.color-btn').forEach(function (btn) {
         btn.addEventListener('click', async function (e) {
@@ -168,7 +165,6 @@ function setupNoteEventListeners(noteElement) {
             const newColor = btn.getAttribute('data-color');
             banner.style.backgroundColor = newColor;
 
-            // Update database with new color
             if (noteId && boardSelector.value) {
                 const updatedData = {
                     color: newColor
@@ -178,7 +174,6 @@ function setupNoteEventListeners(noteElement) {
         });
     });
 
-    // Title change functionality with database update
     const titleInput = noteElement.querySelector('.banner-input');
     if (titleInput) {
         titleInput.addEventListener('blur', async function () {
@@ -191,15 +186,13 @@ function setupNoteEventListeners(noteElement) {
             }
         });
 
-        // Also save on Enter key
         titleInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
-                this.blur(); // Trigger the blur event
+                this.blur();
             }
         });
     }
 
-    // Content change functionality with database update
     const contentTextarea = noteElement.querySelector('.note-textarea');
     if (contentTextarea) {
         contentTextarea.addEventListener('blur', async function () {
@@ -213,11 +206,9 @@ function setupNoteEventListeners(noteElement) {
         });
     }
 
-    // Make draggable with position update
     if (typeof makeDraggable === 'function') {
         makeDraggable(noteElement);
 
-        // Add position update when dragging stops
         let dragEndTimeout;
         noteElement.addEventListener('mouseup', function () {
             clearTimeout(dragEndTimeout);
@@ -234,7 +225,7 @@ function setupNoteEventListeners(noteElement) {
                     };
                     await updateNote(boardSelector.value, noteId, updatedData);
                 }
-            }, 500); // Wait 500ms after drag ends to save position
+            }, 500);
         });
     }
 }
@@ -358,7 +349,6 @@ window.makeDraggable = function(elem) {
 async function deleteNote(boardId, noteId) {
     const token = localStorage.getItem('authToken');
     try {
-        // Try the simpler endpoint structure first
         const response = await fetch(`${apiUrl}boards/cards/${noteId}`, {
             method: 'DELETE',
             headers: {
