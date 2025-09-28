@@ -149,7 +149,7 @@ function setupNoteEventListeners(noteElement) {
     const removeBtn = noteElement.querySelector('.remove-note');
     if (removeBtn) {
         removeBtn.onclick = async function () {
-            const success = await deleteNote(boardSelector.value, noteId);
+            const success = await deleteNote(noteId);
             if (success) {
                 noteElement.remove();
             } else {
@@ -346,7 +346,7 @@ window.makeDraggable = function(elem) {
   
 }
 
-async function deleteNote(boardId, noteId) {
+async function deleteNote(noteId) {
     const token = localStorage.getItem('authToken');
     try {
         const response = await fetch(`${apiUrl}boards/cards/${noteId}`, {
