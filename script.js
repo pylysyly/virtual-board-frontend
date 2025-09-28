@@ -1,17 +1,17 @@
 
-  // remove note
-  note.querySelector('.remove-note').onclick = function () {
-    note.remove();
-  };
+// remove note
+note.querySelector('.remove-note').onclick = function () {
+  note.remove();
+};
 
-  // note header color change
-  const banner = note.querySelector('.note-banner');
-  note.querySelectorAll('.color-btn').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      banner.style.backgroundColor = btn.getAttribute('data-color');
-    });
+// note header color change
+const banner = note.querySelector('.note-banner');
+note.querySelectorAll('.color-btn').forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    banner.style.backgroundColor = btn.getAttribute('data-color');
   });
+});
 
 
 // Drag and Drop funktion
