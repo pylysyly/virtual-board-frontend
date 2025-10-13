@@ -8,10 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  //LÄGG TILL ANTI INJECTION I ALLA TEXTFÄLT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //Lagg till att checka boda inputs so dom inte e tomma!!!!!!!!!!!!!
-
-
   // email o pass check
   document.querySelectorAll('form').forEach(function (form) {
     form.addEventListener('submit', function (e) {
@@ -41,8 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }, 1500);
         }
       }
-      const emailValue = form.querySelector('input[type="email"]').value;
-      const passwordValue = form.querySelector('input[type="password"]').value;
     });
   });
 });
@@ -88,7 +82,6 @@ loginForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value;
   const result = await loginUser(email, password);
   if (result) {
-    alert('Login successful!');
     window.location.href = 'index.html';
   } else {
     alert('Login failed. Please check your credentials.');
@@ -113,7 +106,7 @@ async function signupUser(email, username, password) {
   } catch (error) {
     console.error('Error during signup:', error);
     return null;
-  } 
+  }
 }
 
 signupForm.addEventListener('submit', async (e) => {

@@ -109,7 +109,7 @@ function displayNotes(notes) {
     notes.forEach(note => {
         const noteElement = document.createElement('div');
         noteElement.className = 'note-card draggable-note';
-        noteElement.setAttribute('data-note-id', note.id || note._id); // Store note ID for operations
+        noteElement.setAttribute('data-note-id', note.id || note._id);
         noteElement.innerHTML = `
             <div class="note-banner d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
@@ -126,7 +126,7 @@ function displayNotes(notes) {
             <textarea class="note-textarea" placeholder="Write here...">${note.content || note.text || ''}</textarea>
         `;
 
-        const offset = noteOffset * 30; 
+        const offset = noteOffset * 30;
         noteElement.style.left = (note.positionX || note.posx || offset) + 'px';
         noteElement.style.top = (note.positionY || note.posY || offset) + 'px';
         noteOffset++;
@@ -149,7 +149,7 @@ function setupNoteEventListeners(noteElement) {
     const removeBtn = noteElement.querySelector('.remove-note');
     if (removeBtn) {
         removeBtn.onclick = async function () {
-            const success = await deleteNote(boardSelector.value, noteId);
+            const success = await deleteNote(noteId);
             if (success) {
                 noteElement.remove();
             } else {
@@ -342,11 +342,11 @@ async function updateNote(boardId, noteId, updatedData) {
     }
 }
 
-window.makeDraggable = function(elem) {
-  
+window.makeDraggable = function (elem) {
+
 }
 
-async function deleteNote(boardId, noteId) {
+async function deleteNote(noteId) {
     const token = localStorage.getItem('authToken');
     try {
         const response = await fetch(`${apiUrl}boards/cards/${noteId}`, {
