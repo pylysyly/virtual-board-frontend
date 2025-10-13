@@ -67,7 +67,13 @@ async function loginUser(email, password) {
     const data = await response.json();
     if (data.token) {
       localStorage.setItem('authToken', data.token);
-      console.log('Login successful');
+      console.log('Login successful (token)');
+    } else if (data.accessToken) {
+      localStorage.setItem('authToken', data.accessToken);
+      if (data.refreshToken) {
+        localStorage.setItem('refreshToken', data.refreshToken);
+      }
+      console.log('Login successful (accessToken + refreshToken)');
     }
     return data;
   } catch (error) {
